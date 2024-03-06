@@ -16,10 +16,19 @@ dotenv.config();
 connectDB();
 
 // Middleware
-app.use(cors());
+app.use(
+  cors({
+    origin: ["http://localhost:3000"],
+    methods: ["POST", "GET", "PUT", "DELETE", "PATCH"],
+    credentials: true,
+  })
+);
 app.use(express.json());
 app.use(morgan("dev")); // Use "dev" format for morgan logging
 
+app.get("/", (req, res) => {
+  res.send("<h1>Welcome to the ecommerce app</h1>");
+});
 // Routes
 app.use("/api/v1/auth", authRoute);
 app.use("/api/v1/category", categoryRoutes);
